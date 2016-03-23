@@ -1,0 +1,368 @@
+Go: A Practical Start Guide
+23 March 2016
+
+Jud White
+@judson_white
+https://github.com/judwhite
+
+* Slides Available
+
+- [[https://github.com/judwhite/talks-edgeatx]]
+
+.image images/gophercloud.png 470 _
+
+.caption _The_Go_gopher_was_designed_by_Renée_French_
+
+* This Talk
+
+- Language Features
+- Resources & Community
+- Tools
+- Writing an HTTP Server
+- Concurrency Demo
+
+* Questions?
+
+* Hello, world!
+
+.play 01-hello-world/hello.go
+
+* Hello, world!
+
+.play -numbers 01-hello-world/hello.go
+
+Anatomy:
+
+  package main
+ 
+  import "fmt"
+ 
+  func main() {
+ 
+  	fmt.Println("Hello, world!")
+ 
+  }
+
+* Language Features
+
+* Language Features
+
+- Cross platform, natively compiled
+- Produces a single executable
+- Statically typed
+- Garbage collected
+
+* Language Features
+
+- Concurrency
+- Composable types
+- Interfaces satisfied implicitly
+- Capital letter = exported
+- Return multiple values
+
+* Language Omissions
+
+- Generics
+- Overloads
+- Implicit type conversions
+
+* Standard Library
+
+- Networking
+- Crypto
+- Compression
+- Databases
+- Images
+- Text/HTML templating
+- Testing / Code coverage
+- Community packages [[https://godoc.org]]
+
+* Questions?
+
+* Resources & Community
+
+* Books
+
+.image images/books.png 450 _
+
+.caption _The_Go_Programming_Language_, Donovan & Kernighan
+
+.caption _Go_in_Action_, William Kennedy, Brian Ketelsen, & Erik St. Martin. Promocode: GOIAUCF
+
+* Sites
+
+- [[https://golang.org]]
+- A Tour of Go: [[http://tour.golang.org]]
+- Effective Go: [[https://golang.org/doc/effective_go.html]]
+- Go By Example: [[https://gobyexample.com]]
+- _When_Googling,_use_ `"golang"`
+
+* Community
+
+Online
+
+- Slack: [[https://gophersinvite.herokuapp.com]]
+- IRC: `irc.freenode.net` `#go-nuts`
+- Google Groups: [[https://groups.google.com/forum/#!forum/golang-nuts][golang-nuts]]
+
+Meetups
+
+- [[http://www.meetup.com/atxgolang][Austin Go Language User Group]] - April 20, Umbel
+- [[http://www.meetup.com/North-Austin-Golang-Meetup][North Austin Golang Meetup]] - March 29, TechRanch
+- [[https://gophercon.com][GopherCon]] - July 11-13, Denver, CO
+
+* Tools
+
+* Download Go
+
+- [[https://golang.org/dl]]
+
+Cross-platform IDEs
+
+- [[https://code.visualstudio.com/][VS Code]] /  [[https://github.com/Microsoft/vscode-go][vscode-go plugin]] - vscode settings: [[https://gist.githubusercontent.com/judwhite/b039f45193f986a3c8ad/raw/384446f39805df437e634dabaf54d59208ffc160/launch.json][launch.json]] [[https://gist.githubusercontent.com/judwhite/6c75fcf628cbde9730c3/raw/d181c93bb240743f1be21e222eade251a5c2a584/settings.json][settings.json]] [[https://gist.githubusercontent.com/judwhite/1fad7f34e04f5169ed2e/raw/c62676cc3959d59d92a427b92f85fd4d2ff61648/tasks.json][tasks.json]]
+- [[https://github.com/visualfc/liteide][LiteIDE]]
+- [[https://www.jetbrains.com/idea][IntelliJ IDEA]] / [[https://github.com/go-lang-plugin-org/go-lang-idea-plugin][plugin]]
+- [[https://www.sublimetext.com/][Sublime Text]] / [[https://github.com/golang/sublime-build][Golang Build]] package
+- Vim/Neovim: [[https://github.com/fatih/vim-go][vim-go]] (nvim: deoplete + deoplete-go)
+- Emacs: [[https://github.com/dominikh/go-mode.el][go-model.el]]
+
+Cross-platform Debugger:
+
+- [[https://github.com/derekparker/delve][Delve]]
+
+* The Go Playground
+
+- Share code - [[http://play.golang.org]]
+
+* go fmt
+
+- Tabs? Spaces? go fmt
+- Format code on save
+- Add it to [[https://gist.githubusercontent.com/judwhite/c92e58607e483811a7eb/raw/b18c0d03cb995f7aad68e73616b6098cb19b7886/test.sh][test.sh]]
+
+Example:
+
+- [[http://play.golang.org/p/LJyK8RT3lg]]
+
+* go get
+
+- See something on Github/Bitbucket? go get it
+- Built into IDEs
+
+Example:
+
+  go get github.com/Sirupsen/logrus
+
+* $GOPATH
+
+- **Go*source*lives*best*under*$GOPATH*
+- Example: **~/go/src/github.com/name/repo*
+
+  export GOPATH=$HOME/go
+
+Include bin directories in `PATH`:
+
+  export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+* Other Tools
+
+- go test
+- go test -race
+- go vet
+- godoc
+- pprof
+- [[https://github.com/golang/lint][golint]] - checks code based on [[https://github.com/golang/go/wiki/CodeReviewComments][Go Code Review Comments]]
+- [[https://github.com/kisielk/errcheck][errcheck]]
+
+* Questions?
+
+* Race Detector
+
+* A Race Condition
+
+.play -numbers 02-race-detector/01-race-condition/main.go
+
+* go test -race
+
+  ==================
+  WARNING: DATA RACE
+  Read by goroutine 8:
+    _/C_/datarace.main.func2()
+        C:/datarace/main.go:19 +0x41
+
+  Previous write by goroutine 7:
+    _/C_/datarace.main.func1()
+        C:/datarace/main.go:13 +0x4b
+
+  Goroutine 8 (running) created at:
+    _/C_/datarace.main()
+        C:/datarace/main.go:21 +0x92
+    _/C_/datarace.TestMain()
+        C:/datarace/main_test.go:8 +0x2c
+    testing.tRunner()
+        C:/Go/src/testing/testing.go:473 +0xe3
+
+  Goroutine 7 (running) created at:
+    _/C_/datarace.main()
+        C:/datarace/main.go:15 +0x70
+    _/C_/datarace.TestMain()
+        C:/datarace/main_test.go:8 +0x2c
+    testing.tRunner()
+
+* Data Race Fixed with sync/atomic
+
+.play -numbers 02-race-detector/02-race-condition-fixed-atomic/main.go
+
+* Data Race Fixed with Channels
+
+.play -numbers 02-race-detector/03-race-condition-fixed-chans/main.go
+
+* My race condition only happens in Production!
+
+  go build -race
+
+- Caution: Performance hit
+
+* Read more
+
+- [[https://golang.org/doc/articles/race_detector.html]]
+- [[http://blog.golang.org/race-detector]]
+
+* Questions?
+
+* HTTP: Routing, Middleware, and API Testing
+
+* Simple HTTP Server
+
+- [[http://localhost:7777/hello-world]]
+
+.play 03-http/01-http-helloworld/main.go
+
+* Simple HTTP Server - Routes & Regex
+
+- [[http://localhost:7777/api/v1/echo/hello!]]
+
+.code 03-http/02-http-regex-routes/main.go
+
+* HTTP Server using Gorilla Mux
+
+- [[http://localhost:7777/api/v1/echo/hello!]]
+
+.code 03-http/03-http-gorilla/main.go
+
+* Middleware - Separating Concerns
+
+- [[http://localhost:7777/api/v1/echo/hello]]
+- [[http://localhost:7777/api/v1/echo/hello!]]
+
+.code 03-http/04-http-gorilla-json/main.go
+
+* HTTP API Testing
+
+.code 03-http/04-http-gorilla-json/main_test.go
+
+* Routers
+
+- net/http + regex
+- [[http://www.gorillatoolkit.org/][Gorilla web toolkit]]
+- [[https://github.com/julienschmidt/httprouter][httprouter]]
+- many... too many.
+
+* Questions?
+
+* Concurrency
+
+* Concurrency
+
+- Goroutines
+- Channels
+- sync.WaitGroup
+
+* Print Numbers
+
+.play 04-concurrency/01-print_loop/main.go
+
+* Print Numbers using Goroutines and Channels
+
+.play 04-concurrency/02-goroutine_channel/main.go
+
+* Print Numbers using Goroutines and Channels (inline function)
+
+.play 04-concurrency/03-inline_goroutine/main.go
+
+* Multiple Goroutines, Single Channel
+
+.play 04-concurrency/04-multi_goroutine_single_chan/main.go
+
+* Return a Channel
+
+.play 04-concurrency/05-returned_chan/main.go
+
+* for/range and close
+
+.play 04-concurrency/06-for_range_chan/main.go
+
+* Multiple Goroutines, Multiple Channels
+
+.play 04-concurrency/07-multi_chans_multi_listeners/main.go
+
+* Select
+
+.play 04-concurrency/08-for_select/main.go
+
+* time.After
+
+.play 04-concurrency/09-for_select_timeout/main.go
+
+* Use Channels to send a quit signal
+
+.play 04-concurrency/10-quit_signal/main.go
+
+* sync.WaitGroup
+
+.play 04-concurrency/11-waitgroups_and_closed_channels/main.go
+
+* nil Channels
+
+.play 04-concurrency/12-nil_channel/main.go
+
+* More on Concurrency
+
+- [[https://talks.golang.org/2012/concurrency.slide]]
+- [[https://talks.golang.org/2013/advconc.slide]]
+ 
+* Other topics
+
+Databases:
+
+- [[https://golang.org/pkg/database/sql/#pkg-examples]]
+- [[https://github.com/golang/go/wiki/SQLDrivers]] (alexbrainman/odbc for MS SQL Server)
+- [[https://github.com/go-gorp/gorp]]
+- [[https://github.com/jinzhu/gorm]]
+
+Redis:
+
+- [[https://github.com/garyburd/redigo]]
+
+NSQ:
+
+- [[http://nsq.io]]
+
+* Other topics (cont'd)
+
+Web API Generation:
+
+- [[http://goa.design]]
+
+Request-scoped values, cancellation signals/deadlines
+
+- [[https://blog.golang.org/context]]
+
+Testing:
+
+- [[https://talks.golang.org/2014/testing.slide]] (httptest, code coverage, table driven tests)
+- [[http://agouti.org/]] - WebDriver Wire Protocol (PhantomJS, Selenium, etc)
+
+Structured Logging:
+
+- [[https://github.com/Sirupsen/logrus]]
