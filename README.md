@@ -10,7 +10,7 @@ Topics:
 - Concurrency Demo
 
 Jud White  
-@judson_white  
+[@judson_white](https://twitter.com/judson_white)  
 https://github.com/judwhite
 
 The slides here are in the [present](https://godoc.org/golang.org/x/tools/cmd/present) format.
