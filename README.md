@@ -18,4 +18,4 @@ https://github.com/judwhite
 The slides here are in the [present](https://godoc.org/golang.org/x/tools/cmd/present) format.
 
 Bleeding Edge Web Slides: http://edgeatx.github.io/slides/2016/03-mar  
-Video: https://youtu.be/h8FSgLBlkEI
+Video: https://youtu.be/8Z8cOfyF0C0?t=9m22s
