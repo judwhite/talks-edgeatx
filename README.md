@@ -1,4 +1,4 @@
-Slides: http://go-talks.appspot.com/github.com/judwhite/talks-edgeatx/talk.slide
+Go Slides: http://go-talks.appspot.com/github.com/judwhite/talks-edgeatx/talk.slide
 
 Go: A Practical Start Guide  
 23 March 2016  
@@ -16,3 +16,5 @@ Jud White
 https://github.com/judwhite
 
 The slides here are in the [present](https://godoc.org/golang.org/x/tools/cmd/present) format.
+
+Bleeding Edge Web Slides: http://edgeatx.github.io/slides/2016/03-mar
