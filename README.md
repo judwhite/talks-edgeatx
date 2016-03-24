@@ -1,3 +1,5 @@
+Slides: http://go-talks.appspot.com/github.com/judwhite/talks-edgeatx/talk.slide
+
 Go: A Practical Start Guide  
 23 March 2016  
 http://www.meetup.com/bleeding-edge-web/
